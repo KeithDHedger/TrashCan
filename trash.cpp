@@ -1,50 +1,23 @@
-#if 0
+/*
+ *
+ * ©K. D. Hedger. Sat 29 Aug 19:18:40 BST 2026 keithdhedger@gmail.com
 
-#(c)@USER@ @DATE@ @EMAIL@
+ * This file (trash.cpp) is part of TrashCan.
 
-if [[ ! "X$USEVALGRIND" = "X" ]];then
-	if [ ! -e ./ignorelibleaks ];then
-cat>ignorelibleaks<<EOF
-{
-   ignore_unversioned_libs
-   Memcheck:Leak
-   ...
-   obj:*/lib*/lib*.so
-}
+ * TrashCan is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
 
-{
-   ignore_versioned_libs
-   Memcheck:Leak
-   ...
-   obj:*/lib*/libQt.so.*
-}
-EOF
-	fi
+ * TrashCan is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-	case $USEVALGRIND in
-		1)
-			VALGRIND="valgrind"
-			;;
-		2)
-			VALGRIND="valgrind --leak-check=full"
-			;;
-		3)
-			VALGRIND="valgrind --leak-check=full --show-leak-kinds=all"
-			;;
-		4)
-			unset QT_QPA_PLATFORMTHEME
-			VALGRIND="valgrind --leak-check=full  --track-origins=yes --suppressions=./ignorelibleaks -s "
-			;;
-	esac
-fi
+ * You should have received a copy of the GNU General Public License
+ * along with TrashCan.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
-g++ -Wall $(pkg-config --cflags --libs Qt6Core Qt6Widgets x11) -fPIC trash.cpp trashCanClass.cpp ||exit 1
-$VALGRIND ./a.out "$@"
-retval=$?
-#rm ./a.out
-exit $retval
-
-#endif
 #define PACKAGE_NAME "TrashCan"
 
 #include "trashCanClass.h"
