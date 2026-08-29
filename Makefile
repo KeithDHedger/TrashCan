@@ -1,7 +1,7 @@
 
 PREFIX=/usr
 
-local:
+local: clean
 	g++ -DDATADIR="\"`pwd`\"" -Wall `pkg-config --cflags --libs Qt6Core Qt6Widgets x11` -fPIC trash.cpp trashCanClass.cpp -o trashcan
 	
 all:

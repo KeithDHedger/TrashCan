@@ -45,7 +45,6 @@ class trashCanClassClass:public QMainWindow
 		QAction	*quitAction=NULL;
 		QAction	*showTrashAction=NULL;
 		QAction	*emptyTrashAction=NULL;
-		QPointF	lastSize;
 		int		hite=-1;
 		int		pmwid=-1;
 

@@ -41,4 +41,3 @@ Quit
 Show trash will attempt to open the trash in the default application ( usually your file manager ).  
   
 Requires gvfs to be running.  
-Requires the 'trash-cli' package to be installed ( this may/will change ).  

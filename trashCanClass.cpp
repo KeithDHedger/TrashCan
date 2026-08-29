@@ -65,7 +65,7 @@ trashCanClassClass::trashCanClassClass()
 	this->emptyTrashAction=new QAction(QIcon::fromTheme("user-trash"),"Empty Trash",this);
 	QObject::connect(this->emptyTrashAction,&QAction::triggered,[this](bool checked)
 		{
-			this->runCommandsInShell("echo 'Y'|trash-empty");
+			this->runCommandsInShell("gio trash --empty");
 		});
 
 	this->updateStatus=new QTimer();
@@ -97,8 +97,7 @@ void trashCanClassClass::setImage(void)
 	QString		retstr;
 	QPixmap		tm;
 	
-	retstr=this->runCommandsInShell("trash-list");
-
+	retstr=this->runCommandsInShell("gio trash --list");
 	if(retstr.length()>0)
 		{
 			tm=this->full->scaledToHeight(this->hite);
@@ -181,7 +180,7 @@ void trashCanClassClass::dropEvent(QDropEvent *e)
 		{
 			QString fileName = url.toLocalFile();
      //   qDebug() << "Dropped file:" << fileName;
-			this->runCommandsInShell(QString("trash-put '%1'").arg(fileName));
+			this->runCommandsInShell(QString("gio trash '%1'").arg(fileName));
 		}
 }
 

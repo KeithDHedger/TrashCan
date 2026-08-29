@@ -76,7 +76,7 @@ int main(int argc, char **argv)
 		window->restoreGeometry(prefs.value("app/geometry").toByteArray());
 	else
 		window->setGeometry(56,480,256,354);
-//qApp->installEventFilter(window);
+
 	window->show();
 
 	setWindowSticky(display,window->winId());
