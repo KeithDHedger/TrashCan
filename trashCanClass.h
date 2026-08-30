@@ -48,9 +48,17 @@ class trashCanClassClass:public QMainWindow
 		int		hite=-1;
 		int		pmwid=-1;
 
-		QString	runCommandsInShell(QString commands);
+		void		emptyBin(void);
+		bool		checkBinOccupied(void);
 		void		doTimer(void);
 		void		setImage(void);
+
+
+
+
+
+
+
 };
 
 #endif

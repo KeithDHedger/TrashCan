@@ -1,11 +1,8 @@
 
 PREFIX=/usr
 
-local: clean
-	g++ -DDATADIR="\"`pwd`\"" -Wall `pkg-config --cflags --libs Qt6Core Qt6Widgets x11` -fPIC trash.cpp trashCanClass.cpp -o trashcan
-	
 all:
-	g++ -DDATADIR="\"$(DESTDIR)$(PREFIX)/share/trashcan\"" -Wall `pkg-config --cflags --libs Qt6Core Qt6Widgets x11` -fPIC trash.cpp trashCanClass.cpp -o trashcan
+	g++ -DDATADIR="\"$(DESTDIR)$(PREFIX)/share/trashcan\"" -Wall `pkg-config --cflags --libs Qt6Core Qt6Widgets x11 gio-2.0` -fPIC trash.cpp trashCanClass.cpp -o trashcan
 
 install: all
 	mkdir -vp "$(DESTDIR)$(PREFIX)/share/trashcan"
@@ -14,4 +11,7 @@ install: all
 	cp "./user-trash-full.png" "user-trash.png" "$(DESTDIR)$(PREFIX)/share/trashcan"
 
 clean:
-	rm "./trashcan"
+	rm "./trashcan" || exit 0
+
+local: clean
+	g++ -DDATADIR="\"`pwd`\"" -Wall `pkg-config --cflags --libs Qt6Core Qt6Widgets x11 gio-2.0` -fPIC trash.cpp trashCanClass.cpp -o trashcan
