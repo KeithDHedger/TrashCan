@@ -22,6 +22,7 @@
 
 #include "trashCanClass.h"
 
+#include <unistd.h>
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 
@@ -58,7 +59,8 @@ int main(int argc, char **argv)
     QApplication		app(argc,argv);
 	int				ret;
 	Display			*display;
-//fprintf(stderr,">>%s<<\n",DATADIR);
+	char cwd[PATH_MAX];
+fprintf(stderr,">>%s<<->>%s<<->>%s<<\n",DATADIR,argv[0],getcwd(cwd,sizeof(cwd)));
 
  	display=XOpenDisplay(NULL);
 	if(display==NULL)
