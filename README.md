@@ -40,8 +40,9 @@ Quit
   
 Show trash will attempt to open the trash in the default application ( usually your file manager ).  
   
-Requires gvfs to be running.  
-You may need to launch the app with:   
+Requires gvfs to be running ( it should have been started by the file manager ), otherwise you may need to launch the app with:  
 ```
+
 dbus-launch trashcan
+
 ```
