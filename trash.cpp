@@ -22,34 +22,16 @@
 
 #include "trashCanClass.h"
 
-#include <unistd.h>
+//#include <unistd.h>
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 
-void setWindowSticky(Display *display,Window window)
+void setWindowProps(Display *display,Window window,const char* grp,const char *type_name,int what)
 {
-    int		screen=DefaultScreen(display);
-    Window	root=RootWindow(display,screen);
+	Atom window_type = XInternAtom(display,grp,False);
+	Atom type = XInternAtom(display,type_name,False);
 
-	Atom net_wm_state=XInternAtom(display,"_NET_WM_STATE",False);
-	Atom net_wm_state_sticky=XInternAtom(display,"_NET_WM_STATE_STICKY",False);
-
-	XEvent event={0};
-	event.xclient.type=ClientMessage;
-	event.xclient.message_type=net_wm_state;
-	event.xclient.display=display;
-	event.xclient.window=window;
-	event.xclient.format=32;
-
-    // 1=add,0=remove,2=toggle
-	event.xclient.data.l[0]=1;
-	event.xclient.data.l[1]=net_wm_state_sticky;
-	event.xclient.data.l[2]=0;
-	event.xclient.data.l[3]=1;// source indication: normal application
-	event.xclient.data.l[4]=0;
-
-	XSendEvent(display,root,False,SubstructureRedirectMask | SubstructureNotifyMask,&event);
-
+	XChangeProperty(display,window,window_type,XA_ATOM,32,what,(unsigned char *)&type,1);
     XFlush(display);
 }
 
@@ -59,8 +41,8 @@ int main(int argc, char **argv)
     QApplication		app(argc,argv);
 	int				ret;
 	Display			*display;
-	char cwd[PATH_MAX];
-fprintf(stderr,">>%s<<->>%s<<->>%s<<\n",DATADIR,argv[0],getcwd(cwd,sizeof(cwd)));
+//	char cwd[PATH_MAX];
+//fprintf(stderr,">>%s<<->>%s<<->>%s<<\n",DATADIR,argv[0],getcwd(cwd,sizeof(cwd)));
 
  	display=XOpenDisplay(NULL);
 	if(display==NULL)
@@ -81,7 +63,10 @@ fprintf(stderr,">>%s<<->>%s<<->>%s<<\n",DATADIR,argv[0],getcwd(cwd,sizeof(cwd)))
 
 	window->show();
 
-	setWindowSticky(display,window->winId());
+	setWindowProps(display,window->winId(),"_NET_WM_WINDOW_TYPE","_NET_WM_WINDOW_TYPE_DOCK",PropModeReplace);
+	setWindowProps(display,window->winId(),"_NET_WM_STATE","_NET_WM_STATE_STICKY",PropModeReplace);
+	setWindowProps(display,window->winId(),"_NET_WM_STATE","_NET_WM_STATE_BELOW",PropModeAppend);
+
 	ret=app.exec();
 	prefs.setValue("app/geometry",window->saveGeometry());
  

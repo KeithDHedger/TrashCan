@@ -45,14 +45,13 @@ class trashCanClassClass:public QMainWindow
 		QAction	*quitAction=NULL;
 		QAction	*showTrashAction=NULL;
 		QAction	*emptyTrashAction=NULL;
+		QLabel	*imageLabel=NULL;
 		int		hite=-1;
-		int		pmwid=-1;
 
 		void		emptyBin(void);
 		bool		checkBinOccupied(void);
 		void		doTimer(void);
 		void		setImage(void);
-
 
 
 

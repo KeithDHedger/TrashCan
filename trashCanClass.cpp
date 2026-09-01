@@ -61,9 +61,16 @@ trashCanClassClass::trashCanClassClass()
 			this->doTimer();
 		});
 
-	this->setImage();
-	this->setWindowFlags(Qt::FramelessWindowHint | Qt::Window|Qt::WindowStaysOnBottomHint);
+	this->imageLabel=new QLabel;
+    this->imageLabel->setAlignment(Qt::AlignLeft);
+	this->imageLabel->setMinimumWidth(16);
+	this->imageLabel->setMinimumHeight(16);
+	this->setCentralWidget(this->imageLabel);
+
+	this->setWindowFlags(Qt::FramelessWindowHint|Qt::WindowStaysOnBottomHint);
+	this->setAttribute(Qt::WA_TranslucentBackground);
 	this->setAcceptDrops(true);
+	this->setImage();
 }
 
 void trashCanClassClass::doTimer(void)
@@ -77,27 +84,19 @@ void trashCanClassClass::doTimer(void)
 
 void trashCanClassClass::setImage(void)
 {
-	QString		notrash=QString("%1/user-trash.png").arg(DATADIR);
-	QString		gottrash=QString("%1/user-trash-full.png").arg(DATADIR);
-	QPalette		p;
-	QString		retstr;
-	QPixmap		tm;
-	
-	bool retval=this->checkBinOccupied();
-	if(retval==true)
-		{
-			tm=this->full->scaledToHeight(this->hite);
-			this->setMask(tm.mask());
-			p.setBrush(QPalette::Window,QBrush(tm));
-		}
+	QPixmap *backgroundImage;
+	bool empty=this->checkBinOccupied();
+	if(empty==true)
+		backgroundImage=this->full;
 	else
-		{
-			tm=this->empty->scaledToHeight(this->hite);
-			this->setMask(tm.mask());
-			p.setBrush(QPalette::Window,QBrush(tm));
-		}
-	this->pmwid=tm.width();
-	this->setPalette(p);   
+		backgroundImage=this->empty;
+
+	this->imageLabel->setAlignment(Qt::AlignLeft);
+	this->imageLabel->setGeometry(0,0,this->width(),this->height());
+ 
+	QPixmap bi=backgroundImage->scaledToHeight(this->hite,Qt::SmoothTransformation);
+ 
+	this->imageLabel->setPixmap(bi);
 }
 
 void trashCanClassClass::mousePressEvent(QMouseEvent *event)
@@ -119,9 +118,8 @@ void trashCanClassClass::mousePressEvent(QMouseEvent *event)
 
 			QRect geom=this->geometry();
 
-			this->setImage();
 			geom.setHeight(this->hite);
-			geom.setWidth(this->pmwid);
+			geom.setWidth((int)((double)(this->hite*0.723)+0.5));
 			this->setGeometry(geom);
 			this->setImage();
 		}

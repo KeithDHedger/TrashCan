@@ -46,3 +46,4 @@ Requires gvfs to be running ( it should have been started by the file manager ),
 dbus-launch trashcan
 
 ```
+The trashicon window is now set to _NET_WM_WINDOW_TYPE_DOCK as most compositors can be set to ignore drop shadows for these types of window.  
