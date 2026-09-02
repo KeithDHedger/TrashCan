@@ -42,6 +42,8 @@ int main(int argc, char **argv)
     QApplication		app(argc,argv);
 	int				ret;
 	Display			*display;
+	prefsClass		newprefs;
+	bool				parse;
 //	char cwd[PATH_MAX];
 //fprintf(stderr,">>%s<<->>%s<<->>%s<<\n",DATADIR,argv[0],getcwd(cwd,sizeof(cwd)));
 
@@ -61,10 +63,6 @@ int main(int argc, char **argv)
 			{"windowtype",required_argument,NULL,'w'},
 			{0,0,0,0}
 		};
-
-
-	prefsClass	newprefs;
-	bool parse;
 
 	parse=newprefs.doCliArgs(argc,argv,long_options);
 	if(parse==false)
@@ -93,7 +91,6 @@ int main(int argc, char **argv)
 		setWindowProps(display,window->winId(),"_NET_WM_WINDOW_TYPE",qPrintable(newprefs.getPrefValue("windowtype").toStringList().at(0)),PropModeReplace);
 	else
 		setWindowProps(display,window->winId(),"_NET_WM_WINDOW_TYPE","_NET_WM_WINDOW_TYPE_DOCK",PropModeReplace);
-
 
 	setWindowProps(display,window->winId(),"_NET_WM_STATE","_NET_WM_STATE_STICKY",PropModeReplace);
 

@@ -97,6 +97,7 @@ void trashCanClassClass::setImage(void)
 	QPixmap bi=backgroundImage->scaledToHeight(this->hite,Qt::SmoothTransformation);
  
 	this->imageLabel->setPixmap(bi);
+	this->setMask(bi.mask());
 }
 
 void trashCanClassClass::mousePressEvent(QMouseEvent *event)
