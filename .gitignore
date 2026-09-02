@@ -3,3 +3,4 @@ ignorelibleaks
 runtime-x86_64
 TrashCan.AppImage
 startxroot
+PrivateDevFiles/*.cpp
