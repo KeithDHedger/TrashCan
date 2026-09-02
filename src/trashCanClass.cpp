@@ -149,7 +149,12 @@ void trashCanClassClass::mousePressEvent(QMouseEvent *event)
 
 	if(event->button()==Qt::LeftButton)
 		{
+
+#if QT_VERSION_MAJOR == 6
 			this->m_dragPosition=(event->globalPosition()-frameGeometry().topLeft()).toPoint();
+#else
+			this->m_dragPosition=(event->globalPos()-frameGeometry().topLeft());
+#endif
 			event->accept();
 		}
 }
@@ -158,7 +163,11 @@ void trashCanClassClass::mouseMoveEvent(QMouseEvent *event)
 {
 	if(event->buttons()==Qt::LeftButton)
 		{
+#if QT_VERSION_MAJOR == 6
 			this->move((event->globalPosition()-this->m_dragPosition).toPoint());
+#else
+			this->move((event->globalPos()-this->m_dragPosition));
+#endif
 			event->accept();
 		}
 }

@@ -27,7 +27,15 @@ Which will install to "/tmp/XXX/usr/local/bin"
 make PREFIX=/usr/local DESTDIR=/tmp/XXX install
 
 ```
-You will need the dev files for Qt6Core Qt6Widgets x11 and gio-2.0  
+
+To compile with Qt5 ( default is to use qt6 ) add USEQTVERS=5 after make eg:
+```
+
+make local USEQTVERS=5
+
+```
+
+You will need the dev files for Qt[5/6]Core Qt[5/6]Widgets x11 and gio-2.0  
 
 Drag files to the bin to move them to the trash.  
 

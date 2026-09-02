@@ -1,8 +1,9 @@
 
 PREFIX=/usr
+USEQTVERS=6
 VERSION:=1.0.0
 SRCFILES:=src/trash.cpp src/trashCanClass.cpp src/prefsClass.cpp src/QT_AboutBox.cpp
-FLAGSANDLIBS:=$(shell pkg-config --libs --cflags Qt6Core Qt6Widgets x11 gio-2.0)
+FLAGSANDLIBS:=$(shell pkg-config --libs --cflags Qt$(USEQTVERS)Core Qt$(USEQTVERS)Widgets x11 gio-2.0)
 
 all:
 	g++ $(SRCFILES) -DVERSION="\"$(VERSION)\"" -DDATADIR="\"$(DESTDIR)$(PREFIX)/share/trashcan\"" -Wall $(FLAGSANDLIBS) -fPIC -o trashcan
