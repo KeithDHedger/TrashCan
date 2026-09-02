@@ -21,6 +21,7 @@
 #include <gio/gio.h>
 
 #include "trashCanClass.h"
+#include "QT_AboutBox.h"
 
 trashCanClassClass::~trashCanClassClass()
 {
@@ -52,6 +53,27 @@ trashCanClassClass::trashCanClassClass()
 	QObject::connect(this->emptyTrashAction,&QAction::triggered,[this](bool checked)
 		{
 			this->emptyBin();
+		});
+
+	this->aboutAction=new QAction(QIcon::fromTheme("help-about"),"About",this);
+	QObject::connect(this->aboutAction,&QAction::triggered,[this](bool checked)
+		{
+			AboutBoxClass	about(nullptr,QString("%1/user-trash-full.png").arg(DATADIR));
+			QFile			file(QString("%1/gpl-3.0.txt").arg(DATADIR));
+			if(file.open(QIODevice::ReadOnly | QIODevice::Text))
+				{
+					QTextStream in(&file);
+					about.licence=in.readAll();
+					file.close();
+				}
+			about.credits=credits;
+			about.setHomepage("https://github.com/KeithDHedger/TrashCan","Trashcan");
+			about.setBodyText("A stand alone trashcan.");
+			about.showAboutQtButton(true);
+			about.showLicenceButton(true);
+			about.showCreditsButton(true);
+
+			about.runAbout();
 		});
 
 	this->updateStatus=new QTimer();
@@ -147,6 +169,7 @@ void trashCanClassClass::contextMenuEvent(QContextMenuEvent *event)
 
 	menu.addAction(this->emptyTrashAction);
 	menu.addAction(this->showTrashAction);
+	menu.addAction(this->aboutAction);
 	menu.addAction(this->quitAction);
 	menu.exec(event->globalPos());
 
