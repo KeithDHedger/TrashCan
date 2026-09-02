@@ -1,6 +1,6 @@
 # TrashCan
 
-![Trashcan](user-trash-full.png)
+![Trashcan](data/user-trash-full.png)
 
 A simple stand alone trash can for those who don't run a full desktop or whose desktop doesn't provide one.  
 
