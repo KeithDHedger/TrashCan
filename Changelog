@@ -1,0 +1,11 @@
+1.0.0
+Added cli opts.
+
+0.0.1
+Moved from shaped window to transparent window.
+Fixed make file for mint.
+fixed make file for mint.
+Use gio library to access trash:///.
+Use gio instead of trash-cli.
+Repo tidy.
+Initial commit.

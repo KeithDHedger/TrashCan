@@ -24,7 +24,7 @@ Which will install to "/tmp/XXX/usr/local/bin"
 make PREFIX=/usr/local DESTDIR=/tmp/XXX install
 
 ```
-
+You will need the dev files for Qt6Core Qt6Widgets x11 and gio-2.0  
 
 Drag files to the bin to move them to the trash.  
 
@@ -47,3 +47,19 @@ dbus-launch trashcan
 
 ```
 The trashicon window is now set to _NET_WM_WINDOW_TYPE_DOCK as most compositors can be set to ignore drop shadows for these types of window.  
+
+```
+
+Trashcan - Version 1.0.0
+  -t,--ontop
+        Make trash appear on top of other windows ( default _NET_WM_STATE_BELOW).
+  -w,--windowtype
+        Set trash window to type ( default _NET_WM_WINDOW_TYPE_DOCK ).
+
+CTRL+LEFTBUTTON increases trashcan size.
+CTRL+SHIFT+LEFTBUTTON decreases trashcan size.
+RIGHTBUTTON brings up context menu.
+Drag trashcan to desired position with LEFTBUTTON.
+Size and position are saved on exit.
+
+```

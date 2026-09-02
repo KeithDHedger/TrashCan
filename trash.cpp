@@ -21,6 +21,7 @@
 #define PACKAGE_NAME "TrashCan"
 
 #include "trashCanClass.h"
+#include "prefsClass.h"
 
 //#include <unistd.h>
 #include <X11/Xlib.h>
@@ -37,7 +38,7 @@ void setWindowProps(Display *display,Window window,const char* grp,const char *t
 
 int main(int argc, char **argv)
 {
-	QSettings		prefs("KDHedger","TrachCan");
+	QSettings		prefs("KDHedger",PACKAGE_NAME);
     QApplication		app(argc,argv);
 	int				ret;
 	Display			*display;
@@ -54,18 +55,52 @@ int main(int argc, char **argv)
  	app.setOrganizationDomain("KDHedger");
 	app.setApplicationName(PACKAGE_NAME);
 
+	option	long_options[]=
+		{
+			{"ontop",no_argument,NULL,'t'},
+			{"windowtype",required_argument,NULL,'w'},
+			{0,0,0,0}
+		};
+
+
+	prefsClass	newprefs;
+	bool parse;
+
+	parse=newprefs.doCliArgs(argc,argv,long_options);
+	if(parse==false)
+		{
+			qDebug()<<"\nTrashcan - Version"<<VERSION;
+			qDebug()<<"  -t,--ontop\n\tMake trash appear on top of other windows ( default _NET_WM_STATE_BELOW).";
+			qDebug()<<"  -w,--windowtype\n\tSet trash window to type ( default _NET_WM_WINDOW_TYPE_DOCK ).";
+			qDebug()<<"\nCTRL+LEFTBUTTON increases trashcan size.";
+			qDebug()<<"CTRL+SHIFT+LEFTBUTTON decreases trashcan size.";
+			qDebug()<<"RIGHTBUTTON brings up context menu.";
+			qDebug()<<"Drag trashcan to desired position with LEFTBUTTON.";
+			qDebug()<<"Size and position are saved on exit.";
+			exit(0);
+		}
+
     trashCanClassClass *window=new trashCanClassClass();
 
 	if(prefs.contains("app/geometry"))
 		window->restoreGeometry(prefs.value("app/geometry").toByteArray());
 	else
-		window->setGeometry(56,480,256,354);
+		window->setGeometry(100,100,256,354);
 
 	window->show();
 
-	setWindowProps(display,window->winId(),"_NET_WM_WINDOW_TYPE","_NET_WM_WINDOW_TYPE_DOCK",PropModeReplace);
+	if(newprefs.prefsData.contains(newprefs.hashFromKey("windowtype")))
+		setWindowProps(display,window->winId(),"_NET_WM_WINDOW_TYPE",qPrintable(newprefs.getPrefValue("windowtype").toStringList().at(0)),PropModeReplace);
+	else
+		setWindowProps(display,window->winId(),"_NET_WM_WINDOW_TYPE","_NET_WM_WINDOW_TYPE_DOCK",PropModeReplace);
+
+
 	setWindowProps(display,window->winId(),"_NET_WM_STATE","_NET_WM_STATE_STICKY",PropModeReplace);
-	setWindowProps(display,window->winId(),"_NET_WM_STATE","_NET_WM_STATE_BELOW",PropModeAppend);
+
+	if(newprefs.prefsData.contains(newprefs.hashFromKey("ontop")))
+		setWindowProps(display,window->winId(),"_NET_WM_STATE","_NET_WM_STATE_ABOVE",PropModeAppend);
+	else
+		setWindowProps(display,window->winId(),"_NET_WM_STATE","_NET_WM_STATE_BELOW",PropModeAppend);
 
 	ret=app.exec();
 	prefs.setValue("app/geometry",window->saveGeometry());

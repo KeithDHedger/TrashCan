@@ -67,7 +67,7 @@ trashCanClassClass::trashCanClassClass()
 	this->imageLabel->setMinimumHeight(16);
 	this->setCentralWidget(this->imageLabel);
 
-	this->setWindowFlags(Qt::FramelessWindowHint|Qt::WindowStaysOnBottomHint);
+	this->setWindowFlags(Qt::FramelessWindowHint);
 	this->setAttribute(Qt::WA_TranslucentBackground);
 	this->setAcceptDrops(true);
 	this->setImage();
