@@ -23,7 +23,6 @@
 #include "trashCanClass.h"
 #include "prefsClass.h"
 
-//#include <unistd.h>
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 
@@ -44,8 +43,8 @@ int main(int argc, char **argv)
 	Display			*display;
 	prefsClass		newprefs;
 	bool				parse;
-//	char cwd[PATH_MAX];
-//fprintf(stderr,">>%s<<->>%s<<->>%s<<\n",DATADIR,argv[0],getcwd(cwd,sizeof(cwd)));
+
+//qDebug()<<DATADIR<<argv[0]<<QDir::current();
 
  	display=XOpenDisplay(NULL);
 	if(display==NULL)
