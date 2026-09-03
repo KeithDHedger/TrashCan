@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>TrashCan</title>
+	</head>
+	<body>
+		<div align="center">
+			<h1>TrashCan</h1><br>
+			<img src="user-trash-full.png"><br>
+		</div>
+		<div align="left"></div>
+			A simple stand alone trash can for those who don't run a full desktop or whose desktop doesn't provide one.<br>
+			<pre>
+Trashcan - Version 1.0.0
+  -t,--ontop
+        Make trash appear on top of other windows ( default _NET_WM_STATE_BELOW).
+  -w,--windowtype
+        Set trash window to type ( default _NET_WM_WINDOW_TYPE_DOCK ).
+
+CTRL+LEFTBUTTON increases trashcan size.
+CTRL+SHIFT+LEFTBUTTON decreases trashcan size.
+RIGHTBUTTON brings up context menu.
+Drag trashcan to desired position with LEFTBUTTON.
+Size and position are saved on exit.
+			</pre>
+			Show trash will attempt to open the trash in the default application ( usually your file manager ).<br>
+			Requires gvfs to be running ( it should have been started by the file manager ), otherwise you may need to launch the app with:<br>
+			<pre>
+dbus-launch trashcan
+			</pre>
+			The trashicon window is now set to _NET_WM_WINDOW_TYPE_DOCK as most compositors can be set to ignore drop shadows for these types of window.<br>
+	</body>
+</html>
+

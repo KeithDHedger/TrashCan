@@ -44,7 +44,7 @@ int main(int argc, char **argv)
 	prefsClass		newprefs;
 	bool				parse;
 
-qDebug()<<DATADIR<<argv[0]<<QDir::current()<<QT_VERSION_MAJOR;
+//qDebug()<<DATADIR<<argv[0]<<QDir::current()<<QT_VERSION_MAJOR;
 
  	display=XOpenDisplay(NULL);
 	if(display==NULL)

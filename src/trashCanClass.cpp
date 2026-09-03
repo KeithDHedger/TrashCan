@@ -76,6 +76,14 @@ trashCanClassClass::trashCanClassClass()
 			about.runAbout();
 		});
 
+	this->helpAction=new QAction(QIcon::fromTheme("help-contents"),"Help",this);
+	QObject::connect(this->helpAction,&QAction::triggered,[this](bool checked)
+		{
+		//	AboutBoxClass	about(nullptr);
+			//about.showHelp(QString("%1/help.html").arg(DATADIR));
+			AboutBoxClass::showHelp(QString("%1/help.html").arg(DATADIR));
+		});
+
 	this->updateStatus=new QTimer();
 	this->updateStatus->start(500);
 	QObject::connect(this->updateStatus,&QTimer::timeout,[this]()
@@ -179,6 +187,7 @@ void trashCanClassClass::contextMenuEvent(QContextMenuEvent *event)
 	menu.addAction(this->emptyTrashAction);
 	menu.addAction(this->showTrashAction);
 	menu.addAction(this->aboutAction);
+	menu.addAction(this->helpAction);
 	menu.addAction(this->quitAction);
 	menu.exec(event->globalPos());
 

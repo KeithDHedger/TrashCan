@@ -46,6 +46,7 @@ class trashCanClassClass:public QMainWindow
 		QAction	*showTrashAction=NULL;
 		QAction	*emptyTrashAction=NULL;
 		QAction	*aboutAction=NULL;
+		QAction	*helpAction=NULL;
 		QLabel	*imageLabel=NULL;
 		int		hite=-1;
 

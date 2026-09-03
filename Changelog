@@ -1,4 +1,5 @@
 1.0.0
+Added help to context menu.
 Added qt5 option to Makefile.
 Repo clean.
 Install licence file.
