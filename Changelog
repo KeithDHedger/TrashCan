@@ -1,4 +1,6 @@
 1.0.0
+Added restore single file from trash by selecting from trashed files menu.
+Added show trashed files to context menu.
 Switched prefsclass to cliprefsclass.
 Added help to context menu.
 Added qt5 option to Makefile.

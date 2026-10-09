@@ -181,12 +181,30 @@ void trashCanClassClass::mouseMoveEvent(QMouseEvent *event)
 void trashCanClassClass::contextMenuEvent(QContextMenuEvent *event)
 {
 	QMenu	menu(this);
+	QMenu	submenu("Trashed Files",&menu);
 
+	submenu.setIcon(QIcon::fromTheme("text-x-generic"));
 	menu.addAction(this->emptyTrashAction);
 	menu.addAction(this->showTrashAction);
+
+	for(const QString &actionText : this->fileslist)
+		{
+			QAction *act=new QAction(actionText,&menu);
+			act->setEnabled(true);
+			submenu.addAction(act);
+			QObject::connect(act,&QAction::triggered,[this,act](bool checked)
+				{
+					QProcess::execute("gio",{"trash","--restore",QString("trash:///%1").arg(act->text())});
+				});
+		}
+	menu.addMenu(&submenu);
+
+	menu.addSeparator();
+
 	menu.addAction(this->aboutAction);
 	menu.addAction(this->helpAction);
 	menu.addAction(this->quitAction);
+	
 	menu.exec(event->globalPos());
 
 	event->accept();
@@ -265,7 +283,7 @@ bool trashCanClassClass::checkBinOccupied(void)
 
 	trash=g_file_new_for_uri("trash:///");
 
-	enumerator=g_file_enumerate_children(trash,G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME,G_FILE_QUERY_INFO_NONE,NULL,&error);
+	enumerator=g_file_enumerate_children(trash,G_FILE_ATTRIBUTE_STANDARD_NAME,G_FILE_QUERY_INFO_NONE,NULL,&error);
 	if(enumerator==NULL)
 		{
 			fprintf(stderr, "Cannot open trash: %s\n", error->message);
@@ -274,15 +292,18 @@ bool trashCanClassClass::checkBinOccupied(void)
 			return(false);
 		}
  
-	info=g_file_enumerator_next_file(enumerator,NULL,&error);
-	if(info != NULL)
+
+	this->fileslist.clear();
+	while((info=g_file_enumerator_next_file(enumerator,NULL,&error)) != NULL)
 		{
+			const char *filename=g_file_info_get_name(info);
+			 this->fileslist<<filename;
 			retval=true;
 			g_object_unref(info);
 		}
 
-	g_file_enumerator_close(enumerator, NULL,&error);
-	if(error != NULL)
+	g_file_enumerator_close(enumerator,NULL,&error);
+	if(error!=NULL)
 		g_error_free(error);
 
 	g_object_unref(enumerator);

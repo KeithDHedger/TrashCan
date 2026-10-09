@@ -48,6 +48,9 @@ class trashCanClassClass:public QMainWindow
 		QAction	*aboutAction=NULL;
 		QAction	*helpAction=NULL;
 		QLabel	*imageLabel=NULL;
+		QMenu	*files=NULL;
+		QStringList	fileslist;
+
 		int		hite=-1;
 
 		void		emptyBin(void);
