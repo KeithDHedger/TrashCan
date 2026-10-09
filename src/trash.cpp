@@ -21,7 +21,7 @@
 #define PACKAGE_NAME "TrashCan"
 
 #include "trashCanClass.h"
-#include "prefsClass.h"
+#include "cliPrefsClass.h"
 
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
@@ -41,7 +41,7 @@ int main(int argc, char **argv)
     QApplication		app(argc,argv);
 	int				ret;
 	Display			*display;
-	prefsClass		newprefs;
+	cliPrefsClass	newprefs;
 	bool				parse;
 
 //qDebug()<<DATADIR<<argv[0]<<QDir::current()<<QT_VERSION_MAJOR;
@@ -86,14 +86,14 @@ int main(int argc, char **argv)
 
 	window->show();
 
-	if(newprefs.prefsData.contains(newprefs.hashFromKey("windowtype")))
-		setWindowProps(display,window->winId(),"_NET_WM_WINDOW_TYPE",qPrintable(newprefs.getPrefValue("windowtype").toStringList().at(0)),PropModeReplace);
+	if(newprefs.prefsData.contains(qHash(QString("windowtype"))))
+		setWindowProps(display,window->winId(),"_NET_WM_WINDOW_TYPE",qPrintable(newprefs.getPrefValue("windowtype").at(0)),PropModeReplace);
 	else
 		setWindowProps(display,window->winId(),"_NET_WM_WINDOW_TYPE","_NET_WM_WINDOW_TYPE_DOCK",PropModeReplace);
 
 	setWindowProps(display,window->winId(),"_NET_WM_STATE","_NET_WM_STATE_STICKY",PropModeReplace);
 
-	if(newprefs.prefsData.contains(newprefs.hashFromKey("ontop")))
+	if(newprefs.prefsData.contains(qHash(QString("ontop"))))
 		setWindowProps(display,window->winId(),"_NET_WM_STATE","_NET_WM_STATE_ABOVE",PropModeAppend);
 	else
 		setWindowProps(display,window->winId(),"_NET_WM_STATE","_NET_WM_STATE_BELOW",PropModeAppend);

@@ -2,7 +2,7 @@
 PREFIX=/usr
 USEQTVERS=6
 VERSION:=1.0.0
-SRCFILES:=src/trash.cpp src/trashCanClass.cpp src/prefsClass.cpp src/QT_AboutBox.cpp
+SRCFILES:=src/trash.cpp src/trashCanClass.cpp src/cliPrefsClass.cpp src/QT_AboutBox.cpp
 FLAGSANDLIBS:=$(shell pkg-config --libs --cflags Qt$(USEQTVERS)Core Qt$(USEQTVERS)Widgets x11 gio-2.0) -O0 -g
 
 all:

@@ -79,8 +79,6 @@ trashCanClassClass::trashCanClassClass()
 	this->helpAction=new QAction(QIcon::fromTheme("help-contents"),"Help",this);
 	QObject::connect(this->helpAction,&QAction::triggered,[this](bool checked)
 		{
-		//	AboutBoxClass	about(nullptr);
-			//about.showHelp(QString("%1/help.html").arg(DATADIR));
 			AboutBoxClass::showHelp(QString("%1/help.html").arg(DATADIR));
 		});
 
